@@ -9,37 +9,11 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      markers: [{
-        position: {
-          lat: 25.0112183,
-          lng: 121.52067570000001,
-        },
-        key: `Taiwan`,
-        defaultAnimation: 2,
-      }],
+      markers: [],
     };
 
     this.handleMapClickB = this.handleMapClick.bind(this);
     this.handleMarkerRightclickB = this.handleMarkerRightclick.bind(this);
-  }
-
-  componentDidMount() {
-    setTimeout(() => {
-      let { markers } = this.state;
-      markers = update(markers, {
-        $push: [
-          {
-            position: {
-              lat: 25.99,
-              lng: 122.9,
-            },
-            defaultAnimation: 2,
-            key: Date.now(), // Add a key property for: http://fb.me/react-warning-keys
-          },
-        ],
-      });
-      this.setState({ markers });
-    }, 2000);
   }
 
   handleMapClick(event) {
