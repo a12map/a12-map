@@ -1,62 +1,64 @@
 /* global d3, google */
+import getColor from './../colors';
 
-export function computeVoronoi(data, gmap) {
+export function computeVoronoi(data, map) {
   const overlay = new google.maps.OverlayView();
 
-  overlay.onAdd = function() {
-    const layer = d3.select(this.getPanes().overlayLayer).append("div").attr("class", "SvgOverlay");
-    var svg = layer.append("svg");
-    var svgoverlay = svg.append("g").attr("class", "AdminDivisions");
+  overlay.onAdd = function () {
+    const layer = d3.select(this.getPanes().overlayLayer)
+      .append('div').attr('class', 'SvgOverlay');
+    const svg = layer.append('svg');
+    const svgoverlay = svg.append('g').attr('class', 'AdminDivisions');
 
-    overlay.draw = function() {
+    overlay.draw = function () {
       const markerOverlay = this;
       const overlayProjection = markerOverlay.getProjection();
 
-      /**
-       * @param {[x, y]} coordinates
-       * @return {*[]}
-       */
-      const googleMapProjection = function (coordinates) {
-        var googleCoordinates = new google.maps.LatLng(coordinates[1], coordinates[0]);
-        var pixelCoordinates = overlayProjection.fromLatLngToDivPixel(googleCoordinates);
+      const googleMapProjection = function (lat, lng) {
+        const googleCoordinates = new google.maps.LatLng(lat, lng);
+        const pixelCoordinates = overlayProjection.fromLatLngToDivPixel(googleCoordinates);
         return [pixelCoordinates.x + 4000, pixelCoordinates.y + 4000];
       };
 
-      const positions = data.map(d => googleMapProjection([d.lat, d.lng]));
+      const positions = data.map(d => googleMapProjection(d.lat, d.lng));
+
       const polygons = d3.geom.voronoi(positions);
 
       const pathAttr = {
         d(d, i) {
-          return "M" + polygons[i].join("L") + "Z"
+          return 'M' + polygons[i].join('L') + 'Z'
         },
-        stroke: "red",
-        fill: "none"
+        // stroke: 'black'
+        fill(d, i) {
+          return getColor((data[i].value / 60) * 5)
+        },
+        opacity: 0.3
       };
 
-      svgoverlay.selectAll("path")
-        .data(data)
+      svgoverlay.selectAll('path')
+        .data(positions)
         .attr(pathAttr)
         .enter()
-        .append("svg:path")
-        .attr("class", "cell")
+        .append('svg:path')
+        .attr('class', 'cell')
         .attr(pathAttr);
 
-      var circleAttr = {
-        "cx":function(d, i) { return positions[i][0]; },
-        "cy":function(d, i) { return positions[i][1]; },
-        "r":2,
-        fill:"red"
+      const circleAttr = {
+        'cx':function(d, i) { return positions[i][0]; },
+        'cy':function(d, i) { return positions[i][1]; },
+        'r':.5,
+        fill:'red'
       };
 
-      svgoverlay.selectAll("circle")
-        .data(data)
+      svgoverlay.selectAll('circle')
+        .data(positions)
         .attr(circleAttr)
         .enter()
-        .append("svg:circle")
+        .append('svg:circle')
         .attr(circleAttr)
-    }
 
-
+    };
   };
-  overlay.setMap(gmap);
+
+  overlay.setMap(map);
 }

@@ -11,3 +11,17 @@ body {
 #root {
   height: 100%;
 }
+
+.SvgOverlay {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.SvgOverlay svg {
+  position: absolute;
+  top: -4000px;
+  left: -4000px;
+  width: 8000px;
+  height: 8000px;
+}
