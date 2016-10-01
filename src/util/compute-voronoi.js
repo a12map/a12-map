@@ -1,5 +1,5 @@
 /* global d3, google */
-import getColor from './../colors';
+import getColor from './colors';
 
 export function computeVoronoi(data, map) {
   const overlay = new google.maps.OverlayView();
@@ -33,9 +33,9 @@ export function computeVoronoi(data, map) {
         },
         stroke: 'darkgrey',
         fill(d, i) {
-          return getColor((data[i].value / 60) * 5)
+          return getColor((data[i].value / 60))
         },
-        opacity: 0.3
+        opacity: 0.4
       };
 
       svgoverlay.selectAll('path')
