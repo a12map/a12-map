@@ -52,12 +52,10 @@ export default class SimpleMap extends Component {
     );
 
     return (
-      <section style={{ height: `90%` }}>
-        <GoogleMapLoader
-          containerElement={containerElement}
-          googleMapElement={googleMapElement}
-        />
-      </section>
+      <GoogleMapLoader
+        containerElement={containerElement}
+        googleMapElement={googleMapElement}
+      />
     )
   }
 }
