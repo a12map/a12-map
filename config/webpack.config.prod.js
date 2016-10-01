@@ -19,6 +19,7 @@ function ensureSlash(path, needsSlash) {
   }
 }
 
+
 // We use "homepage" field to infer "public path" at which the app is served.
 // Webpack needs to know it to put the right <script> hrefs into HTML even in
 // single-page apps that may serve index.html for nested URLs like /todos/42.
@@ -35,7 +36,7 @@ var publicPath = ensureSlash(homepagePathname, true);
 var publicUrl = ensureSlash(homepagePathname, false);
 // Get enrivonment variables to inject into our app.
 var env = getClientEnvironment(publicUrl);
-
+console.log('env', env)
 // Assert this just to be safe.
 // Development builds of React are slow and not intended for production.
 if (env['process.env.NODE_ENV'] !== '"production"') {
@@ -176,7 +177,8 @@ module.exports = {
     // In production, it will be an empty string unless you specify "homepage"
     // in `package.json`, in which case it will be the pathname of that URL.
     new InterpolateHtmlPlugin({
-      PUBLIC_URL: publicUrl
+      PUBLIC_URL: publicUrl,
+      REACT_APP_MAP_KEY: process.env.REACT_APP_MAP_KEY
     }),
     // Generates an `index.html` file with the <script> injected.
     new HtmlWebpackPlugin({

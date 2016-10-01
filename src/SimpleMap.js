@@ -4,8 +4,10 @@ import {
   GoogleMap,
 } from "react-google-maps";
 
+import { computeVoronoi } from './util/compute-voronoi'
+
 const getData = () => {
-  return fetch('http://localhost:3333/stops-test.json')
+  return fetch('https://cdn.rawgit.com/vire/b8479e68f462743448139f98e2f91ee3/raw/48fe43bc2ad85084aa74e290c8a3eef657eaa666/test-data.json')
     .then(response => response.json())
 };
 
@@ -16,6 +18,9 @@ export default class SimpleMap extends Component {
   componentDidMount() {
     getData()
       .then(dataPoints => {
+
+        // computeVoronoi(dataPoints);
+
         dataPoints.forEach(point => {
           new window.google.maps.Circle({
             strokeColor: '#FF0000',
