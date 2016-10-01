@@ -1,10 +1,12 @@
 import React, { Component } from "react";
+
 import {
   GoogleMapLoader,
   GoogleMap,
 } from "react-google-maps";
 
 import { computeVoronoi } from './util/compute-voronoi';
+import { customizeMap } from './util/customize-map';
 
 const pragueLoc = { lat: 50.070569, lng: 14.419172 };
 
@@ -44,6 +46,7 @@ export default class SimpleMap extends Component {
         ref={(mapWrapper) => {
           this.gmapRef = mapWrapper.props.map;
           this.updateMap(mapWrapper.props.map);
+          customizeMap(mapWrapper.props.map);
         }}
         defaultZoom={12}
         defaultCenter={pragueLoc}
