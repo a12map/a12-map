@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import update from "react-addons-update";
 
 import './App.css';
-import SimpleMap from './SimpleMap';
+import SimpleMap from './GoogleMapsVoronai';
 
 class App extends Component {
 

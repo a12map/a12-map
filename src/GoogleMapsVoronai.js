@@ -4,19 +4,14 @@ import {
   GoogleMap,
 } from "react-google-maps";
 
-import getColor from './colors';
+import { computeVoronoi } from './util/compute-voronoi';
 
-import { computeVoronoi } from './util/compute-voronoi'
-
-const getData = () => {
-  return fetch('http://10.2.23.6:5000/accessibility?lat=50.089511&lng=14.435188')
-    .then(response => response.json())
-};
+const pragueLoc = { lat: 50.070569, lng: 14.419172 };
 
 export default class SimpleMap extends Component {
-
   updateMap(map) {
-    getData()
+    fetch('http://10.2.23.6:5000/accessibility?lat=50.089511&lng=14.435188')
+      .then(response => response.json())
       .then(data => {
         computeVoronoi(data.stations, map)
       })
@@ -37,7 +32,7 @@ export default class SimpleMap extends Component {
       <GoogleMap
         ref={(mapWrapper) => this.updateMap(mapWrapper.props.map)}
         defaultZoom={12}
-        defaultCenter={{ lat: 50.070569, lng: 14.419172 }}
+        defaultCenter={pragueLoc}
       />
     );
 

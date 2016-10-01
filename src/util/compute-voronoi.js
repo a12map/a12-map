@@ -7,6 +7,7 @@ export function computeVoronoi(data, map) {
   overlay.onAdd = function () {
     const layer = d3.select(this.getPanes().overlayLayer)
       .append('div').attr('class', 'SvgOverlay');
+
     const svg = layer.append('svg');
     const svgoverlay = svg.append('g').attr('class', 'AdminDivisions');
 
@@ -28,7 +29,7 @@ export function computeVoronoi(data, map) {
         d(d, i) {
           return 'M' + polygons[i].join('L') + 'Z'
         },
-        // stroke: 'black'
+        stroke: 'darkgrey',
         fill(d, i) {
           return getColor((data[i].value / 60) * 5)
         },
@@ -44,10 +45,10 @@ export function computeVoronoi(data, map) {
         .attr(pathAttr);
 
       const circleAttr = {
-        'cx':function(d, i) { return positions[i][0]; },
-        'cy':function(d, i) { return positions[i][1]; },
-        'r':.5,
-        fill:'red'
+        cx(d, i) { return positions[i][0]; },
+        cy(d, i) { return positions[i][1]; },
+        r: 1,
+        fill:'black'
       };
 
       svgoverlay.selectAll('circle')
@@ -56,7 +57,6 @@ export function computeVoronoi(data, map) {
         .enter()
         .append('svg:circle')
         .attr(circleAttr)
-
     };
   };
 
