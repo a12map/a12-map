@@ -5,7 +5,9 @@ export function computeVoronoi(data, map) {
   const overlay = new google.maps.OverlayView();
 
   overlay.onAdd = function () {
-    const layer = d3.select(this.getPanes().overlayLayer)
+    var select = d3.select(this.getPanes().overlayLayer);
+    select.html("");
+    const layer = select
       .append('div').attr('class', 'SvgOverlay');
 
     const svg = layer.append('svg');
