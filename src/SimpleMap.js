@@ -4,6 +4,8 @@ import {
   GoogleMap,
 } from "react-google-maps";
 
+import getColor from './colors';
+
 const getData = () => {
   return fetch('http://localhost:3333/stops-test.json')
     .then(response => response.json())
@@ -18,10 +20,10 @@ export default class SimpleMap extends Component {
       .then(dataPoints => {
         dataPoints.forEach(point => {
           new window.google.maps.Circle({
-            strokeColor: '#FF0000',
+            strokeColor: getColor(point.minutes*2),
             strokeOpacity: 0.8,
             strokeWeight: 2,
-            fillColor: '#FF0000',
+            fillColor: getColor(point.minutes*2),
             fillOpacity: 0.35,
             map: this.gmap,
             center: {
