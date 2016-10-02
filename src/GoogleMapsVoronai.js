@@ -21,8 +21,7 @@ export default class SimpleMap extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.time !== nextProps.time) {
-      this.updateMap(this.gmapRef, this.lastLat, this.lastLng);
-      this.gmapRef.setMapTypeId(nextProps.time);
+      this.updateMap(this.gmapRef, this.lastLat, this.lastLng, nextProps.time);
     }
   }
 
@@ -34,13 +33,14 @@ export default class SimpleMap extends Component {
     this.props.onStopHover(stationName, travelTime)
   }
 
-  updateMap(map, lat = pragueLoc.lat, lng = pragueLoc.lng) {
+  updateMap(map, lat = pragueLoc.lat, lng = pragueLoc.lng, time = 'day') {
     this.lastLat = lat;
     this.lastLng = lng;
-    fetch(`https://ph2016a12api.herokuapp.com/accessibility?lat=${lat}&lng=${lng}&time=${this.props.time}`)
+    fetch(`https://ph2016a12api.herokuapp.com/accessibility?lat=${lat}&lng=${lng}&time=${time}`)
       .then(response => response.json())
       .then(data => {
         computeVoronoi(data.stations, map, this.handleHoverB)
+        this.gmapRef.setMapTypeId(time);
       })
   }
 
