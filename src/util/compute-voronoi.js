@@ -1,12 +1,13 @@
 /* global d3, google */
 import getColor from './colors';
 
-export function computeVoronoi(data, map) {
+export function computeVoronoi(data, map, handleHover) {
   const overlay = new google.maps.OverlayView();
 
   overlay.onAdd = function () {
-    var select = d3.select(this.getPanes().overlayLayer);
-    select.html("");
+    // http://stackoverflow.com/questions/13852065/custom-mouse-interaction-for-svg-layer-in-google-maps
+    const select = d3.select(this.getPanes().overlayMouseTarget);
+    select.html(''); // TODO this is a dirty solution how to empty
     const layer = select
       .append('div').attr('class', 'SvgOverlay');
 
@@ -23,9 +24,19 @@ export function computeVoronoi(data, map) {
         return [pixelCoordinates.x + 4000, pixelCoordinates.y + 4000];
       };
 
-      const positions = data.map(d => googleMapProjection(d.lat, d.lng));
+      const positions = data.map(d => {
+        return {
+          travelTime: d.value,
+          name: d.name,
+          latLng: googleMapProjection(d.lat, d.lng)
+        }
+      });
 
-      const polygons = d3.geom.voronoi(positions);
+      const voronoiInit = d3.geom.voronoi()
+        .x(function(d) { return d.latLng[0]; })
+        .y(function(d) { return d.latLng[1]; });
+
+      const polygons = voronoiInit(positions);
 
       const pathAttr = {
         d(d, i) {
@@ -44,11 +55,12 @@ export function computeVoronoi(data, map) {
         .enter()
         .append('svg:path')
         .attr('class', 'cell')
-        .attr(pathAttr);
+        .attr(pathAttr)
+        .on('mouseover', ({ name, travelTime }) => handleHover(name, travelTime));
 
       const circleAttr = {
-        cx(d, i) { return positions[i][0]; },
-        cy(d, i) { return positions[i][1]; },
+        cx(d, i) { return positions[i].latLng[0]; },
+        cy(d, i) { return positions[i].latLng[1]; },
         r: 1,
         fill:'black'
       };

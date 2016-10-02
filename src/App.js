@@ -13,10 +13,13 @@ class App extends Component {
     super();
     this.state = {
       markers: [],
+      selectedStation: '',
+      travelTime: 0,
     };
 
     this.handleMapClickB = this.handleMapClick.bind(this);
     this.handleMarkerRightclickB = this.handleMarkerRightclick.bind(this);
+    this.handleStopHoverB = this.handleStopHover.bind(this);
   }
 
   handleMapClick(event) {
@@ -33,6 +36,10 @@ class App extends Component {
     this.setState({markers});
   }
 
+  handleStopHover(selectedStation, travelTime) {
+    this.setState(Object.assign({}, this.state, { selectedStation, travelTime }))
+  }
+
   handleMarkerRightclick(index, event) {
     let {markers} = this.state;
     markers = update(markers, {
@@ -41,6 +48,10 @@ class App extends Component {
       ],
     });
     this.setState({markers});
+  }
+
+  formatTravelTime(travelTime) {
+    return `${~~(travelTime / 60)} min.`
   }
 
   render() {
@@ -52,6 +63,7 @@ class App extends Component {
         <div className="App-map-container">
           <SimpleMap
             markers={this.state.markers}
+            onStopHover={this.handleStopHoverB}
             onMapClick={this.handleMapClickB}
             onMarkerRightclick={this.handleMarkerRightclickB}
           />
@@ -68,8 +80,14 @@ class App extends Component {
             ))}
           </div>
         </div>
+
         <div className="App-infobox-stops">
-          ?
+          {this.state.selectedStation && (
+            <div>
+              <div>{this.state.selectedStation}</div>
+              <div>{this.formatTravelTime(this.state.travelTime)}</div>
+            </div>
+          )}
         </div>
       </div>
     );

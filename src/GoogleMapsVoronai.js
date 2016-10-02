@@ -16,17 +16,22 @@ export default class SimpleMap extends Component {
     super(props);
     this.setupMapB = this.setupMap.bind(this);
     this.handleMapClickB = this.handleMapClick.bind(this);
+    this.handleHoverB = this.handleHover.bind(this);
   }
 
   handleMapClick(event) {
     this.updateMap(this.gmapRef, event.latLng.lat(),event.latLng.lng())
   }
 
-  updateMap(map) {
-    fetch('https://cdn.rawgit.com/vire/a12-map/master/data/prod-data.json')
+  handleHover(stationName, travelTime) {
+    this.props.onStopHover(stationName, travelTime)
+  }
+
+  updateMap(map, lat = 50.089511, lng = 14.435188) {
+    fetch(`http://10.2.23.6:5000/accessibility?lat=${lat}&lng=${lng}`)
       .then(response => response.json())
       .then(data => {
-        computeVoronoi(data.stations, map)
+        computeVoronoi(data.stations, map, this.handleHoverB)
       })
   }
 
