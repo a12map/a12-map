@@ -14,20 +14,27 @@ export default class SimpleMap extends Component {
 
   constructor(props) {
     super(props);
-
-    this.handleMapClickB = this.handleMapClick.bind(this)
+    this.setupMapB = this.setupMap.bind(this);
+    this.handleMapClickB = this.handleMapClick.bind(this);
   }
 
   handleMapClick(event) {
     this.updateMap(this.gmapRef, event.latLng.lat(),event.latLng.lng())
   }
 
-  updateMap(map, lat = 50.089511, lng = 14.435188) {
-    fetch(`http://10.2.23.6:5000/accessibility?lat=${lat}&lng=${lng}`)
+  updateMap(map) {
+    fetch('https://cdn.rawgit.com/vire/a12-map/master/data/prod-data.json')
       .then(response => response.json())
       .then(data => {
         computeVoronoi(data.stations, map)
       })
+  }
+
+  setupMap(ref) {
+    const {map} = ref.props;
+    this.gmapRef = map;
+    this.updateMap(map);
+    customizeMap(map);
   }
 
   render() {
@@ -43,11 +50,7 @@ export default class SimpleMap extends Component {
 
     const googleMapElement = (
       <GoogleMap
-        ref={(mapWrapper) => {
-          this.gmapRef = mapWrapper.props.map;
-          this.updateMap(mapWrapper.props.map);
-          customizeMap(mapWrapper.props.map);
-        }}
+        ref={this.setupMapB}
         defaultZoom={12}
         defaultCenter={pragueLoc}
         onClick={this.handleMapClickB}
