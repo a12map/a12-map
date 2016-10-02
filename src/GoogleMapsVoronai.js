@@ -22,6 +22,7 @@ export default class SimpleMap extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.time !== nextProps.time) {
       this.updateMap(this.gmapRef, this.lastLat, this.lastLng);
+      this.gmapRef.setMapTypeId(nextProps.time);
     }
   }
 
