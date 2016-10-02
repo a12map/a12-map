@@ -58,7 +58,7 @@ class App extends Component {
   }
 
   formatTravelTime(travelTime) {
-    return `${~~(travelTime / 60)} min.`
+    return `${~~(travelTime / 60)} min`
   }
 
   render() {
@@ -104,15 +104,12 @@ class App extends Component {
             ))}
           </div>
         </div>
-
-        <div className="App-infobox-stops">
-          {this.state.selectedStation && (
-            <div>
-              <div>{this.state.selectedStation}</div>
-              <div>{this.formatTravelTime(this.state.travelTime)}</div>
-            </div>
-          )}
-        </div>
+        {this.state.selectedStation && (
+          <div className="App-infobox-stops">
+            <div>{this.state.selectedStation}</div>
+            <div>{this.formatTravelTime(this.state.travelTime)}</div>
+          </div>
+        )}
       </div>
     );
   }
