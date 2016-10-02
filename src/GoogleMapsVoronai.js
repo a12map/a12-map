@@ -37,7 +37,7 @@ export default class SimpleMap extends Component {
   updateMap(map, lat = pragueLoc.lat, lng = pragueLoc.lng) {
     this.lastLat = lat;
     this.lastLng = lng;
-    fetch(`http://10.2.23.6:5000/accessibility?lat=${lat}&lng=${lng}&time=${this.props.time}`)
+    fetch(`http://10.2.22.105:5555/accessibility?lat=${lat}&lng=${lng}&time=${this.props.time}`)
       .then(response => response.json())
       .then(data => {
         computeVoronoi(data.stations, map, this.handleHoverB)
@@ -68,6 +68,11 @@ export default class SimpleMap extends Component {
         ref={this.setupMapB}
         defaultZoom={12}
         defaultCenter={pragueLoc}
+        defaultOptions={{
+          streetViewControl: false,
+          mapTypeControl: false,
+        }}
+        mapTypeControl={false}
         onClick={this.handleMapClickB}
       />
     );
