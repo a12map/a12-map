@@ -10,14 +10,18 @@
   top: 0px;
   left: 0px;
   right: 0px;
-  height: 70px;
+  height: 30px;
   background-color: #222;
   color: white;
 }
 
+.App-header h2 {
+  margin: 0;
+}
+
 .App-map-container {
   position: absolute;
-  top: 70px;
+  top: 30px;
   left: 0px;
   right: 0px;
   bottom: 0px;
@@ -27,22 +31,22 @@
   text-align: left;
   background-color: white;
   border: 1px solid #bbbbbb;
-  bottom: 100px;
+  bottom: 75px;
   height: 40px;
   padding: 5px;
   position: absolute;
-  left: 30px;
+  left: 10px;
   font-size: small;
 }
 
 .App-infobox {
   background-color: white;
   border: 1px solid #bbbbbb;
-  bottom: 30px;
+  bottom: 20px;
   height: 35px;
   padding: 5px;
   position: absolute;
-  left: 30px;
+  left: 10px;
 }
 
 .Scale-rectangle {
@@ -63,11 +67,11 @@
 .App-infobox-stops {
   background-color: white;
   border: 1px solid #bbbbbb;
-  bottom: 30px;
+  bottom: 20px;
   height: 35px;
   padding: 5px;
   position: absolute;
-  left: 270px;
+  left: 240px;
   font-size: small;
   text-align: left;
   min-width: 8vw;
