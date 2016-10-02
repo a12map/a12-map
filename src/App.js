@@ -1,8 +1,11 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import update from "react-addons-update";
 
 import './App.css';
 import SimpleMap from './GoogleMapsVoronai';
+
+import getColor from './util/colors';
+const SCALE_MINUTES = [0, 10, 20, 30, 40, 50, 60];
 
 class App extends Component {
 
@@ -17,7 +20,7 @@ class App extends Component {
   }
 
   handleMapClick(event) {
-    let { markers } = this.state;
+    let {markers} = this.state;
     markers = update(markers, {
       $push: [
         {
@@ -27,17 +30,17 @@ class App extends Component {
         },
       ],
     });
-    this.setState({ markers });
+    this.setState({markers});
   }
 
   handleMarkerRightclick(index, event) {
-    let { markers } = this.state;
+    let {markers} = this.state;
     markers = update(markers, {
       $splice: [
         [index, 1],
       ],
     });
-    this.setState({ markers });
+    this.setState({markers});
   }
 
   render() {
@@ -53,7 +56,21 @@ class App extends Component {
             onMarkerRightclick={this.handleMarkerRightclickB}
           />
         </div>
-
+        <div className="App-infobox">
+          <div>
+            {SCALE_MINUTES.map((minute, index) => (
+              <div key={index} style={{backgroundColor: getColor(minute)}} className="Scale-rectangle"/>
+            ))}
+          </div>
+          <div>
+            {SCALE_MINUTES.map((minute, index) => (
+              <div key={index} className="Scale-label">{minute}</div>
+            ))}
+          </div>
+        </div>
+        <div className="App-infobox-stops">
+          ?
+        </div>
       </div>
     );
   }
