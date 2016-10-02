@@ -23,6 +23,18 @@
   bottom: 0px;
 }
 
+.App-time {
+  text-align: left;
+  background-color: white;
+  border: 1px solid #bbbbbb;
+  bottom: 100px;
+  height: 40px;
+  padding: 5px;
+  position: absolute;
+  left: 30px;
+  font-size: small;
+}
+
 .App-infobox {
   background-color: white;
   border: 1px solid #bbbbbb;

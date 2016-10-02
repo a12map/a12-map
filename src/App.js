@@ -6,6 +6,8 @@ import SimpleMap from './GoogleMapsVoronai';
 
 import getColor from './util/colors';
 const SCALE_MINUTES = [0, 10, 20, 30, 40, 50, 60];
+const DAY = 'day';
+const NIGHT = 'night';
 
 class App extends Component {
 
@@ -13,6 +15,7 @@ class App extends Component {
     super();
     this.state = {
       markers: [],
+      time: DAY,
       selectedStation: '',
       travelTime: 0,
     };
@@ -50,6 +53,10 @@ class App extends Component {
     this.setState({markers});
   }
 
+  handleTimeChange(event) {
+    this.setState({time: event.target.value});
+  }
+
   formatTravelTime(travelTime) {
     return `${~~(travelTime / 60)} min.`
   }
@@ -62,11 +69,28 @@ class App extends Component {
         </div>
         <div className="App-map-container">
           <SimpleMap
+            time={this.state.time}
             markers={this.state.markers}
             onStopHover={this.handleStopHoverB}
             onMapClick={this.handleMapClickB}
             onMarkerRightclick={this.handleMarkerRightclickB}
           />
+        </div>
+        <div className="App-time">
+          <input
+            type="radio"
+            value={DAY}
+            checked={this.state.time === DAY}
+            onChange={this.handleTimeChange.bind(this)}/>
+            {DAY}
+          <br/>
+          <input
+            type="radio"
+            value={NIGHT}
+            checked={this.state.time === NIGHT}
+            onChange={this.handleTimeChange.bind(this)}/>
+          {NIGHT}
+          <br/>
         </div>
         <div className="App-infobox">
           <div>

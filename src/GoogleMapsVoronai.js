@@ -19,16 +19,24 @@ export default class SimpleMap extends Component {
     this.handleHoverB = this.handleHover.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.time !== nextProps.time) {
+      this.updateMap(this.gmapRef, this.lastLat, this.lastLng);
+    }
+  }
+
   handleMapClick(event) {
-    this.updateMap(this.gmapRef, event.latLng.lat(),event.latLng.lng())
+    this.updateMap(this.gmapRef, event.latLng.lat(), event.latLng.lng())
   }
 
   handleHover(stationName, travelTime) {
     this.props.onStopHover(stationName, travelTime)
   }
 
-  updateMap(map, lat = 50.089511, lng = 14.435188) {
-    fetch(`http://10.2.23.6:5000/accessibility?lat=${lat}&lng=${lng}`)
+  updateMap(map, lat = pragueLoc.lat, lng = pragueLoc.lng) {
+    this.lastLat = lat;
+    this.lastLng = lng;
+    fetch(`http://10.2.23.6:5000/accessibility?lat=${lat}&lng=${lng}&time=${this.props.time}`)
       .then(response => response.json())
       .then(data => {
         computeVoronoi(data.stations, map, this.handleHoverB)
@@ -55,6 +63,7 @@ export default class SimpleMap extends Component {
 
     const googleMapElement = (
       <GoogleMap
+        time={props.time}
         ref={this.setupMapB}
         defaultZoom={12}
         defaultCenter={pragueLoc}
