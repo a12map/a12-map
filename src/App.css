@@ -15,6 +15,12 @@
   color: white;
 }
 
+.App-header-button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
 .App-header h2 {
   margin: 0;
 }

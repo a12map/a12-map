@@ -66,6 +66,11 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
           <h2>A12 Map</h2>
+          <span className="App-header-button">
+            <a className="github-button" href="https://github.com/vire/a12-map/" aria-label="View a12-map on GitHub">
+              View on Github
+            </a>
+          </span>
         </div>
         <div className="App-map-container">
           <SimpleMap
