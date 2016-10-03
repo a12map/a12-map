@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import update from "react-addons-update";
 
 import './App.css';
-import SimpleMap from './GoogleMapsVoronai';
+import GoogleMapsVoronai from './GoogleMapsVoronai';
 
 import getColor from './util/colors';
 const SCALE_MINUTES = [0, 10, 20, 30, 40, 50, 60];
@@ -20,23 +20,8 @@ class App extends Component {
       travelTime: 0,
     };
 
-    this.handleMapClickB = this.handleMapClick.bind(this);
     this.handleMarkerRightclickB = this.handleMarkerRightclick.bind(this);
     this.handleStopHoverB = this.handleStopHover.bind(this);
-  }
-
-  handleMapClick(event) {
-    let {markers} = this.state;
-    markers = update(markers, {
-      $push: [
-        {
-          position: event.latLng,
-          defaultAnimation: 2,
-          key: Date.now(), // Add a key property for: http://fb.me/react-warning-keys
-        },
-      ],
-    });
-    this.setState({markers});
   }
 
   handleStopHover(selectedStation, travelTime) {
@@ -68,12 +53,12 @@ class App extends Component {
           <h2>A12 Map</h2>
           <span className="App-header-button">
             <a className="github-button" href="https://github.com/vire/a12-map/" aria-label="View a12-map on GitHub">
-              View on Github
+              Github
             </a>
           </span>
         </div>
         <div className="App-map-container">
-          <SimpleMap
+          <GoogleMapsVoronai
             time={this.state.time}
             markers={this.state.markers}
             onStopHover={this.handleStopHoverB}

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-
 import {
   GoogleMapLoader,
   GoogleMap,
@@ -56,8 +55,7 @@ export default class SimpleMap extends Component {
     const containerElement =(
       <div
         {...props.containerElementProps}
-        style={{
-          height: `100%`,
+        style={{ height: `100%`,
         }}
       />
     );

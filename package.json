@@ -57,6 +57,7 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
+    "lint": "eslint -c .eslintrc src/",
     "test": "node scripts/test.js --env=jsdom"
   },
   "license": "ISC",
@@ -83,8 +84,5 @@
     "presets": [
       "react-app"
     ]
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   }
 }
