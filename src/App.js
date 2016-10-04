@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import update from "react-addons-update";
 
 import './App.css';
 import GoogleMapsVoronai from './GoogleMapsVoronai';
@@ -20,22 +19,11 @@ class App extends Component {
       travelTime: 0,
     };
 
-    this.handleMarkerRightclickB = this.handleMarkerRightclick.bind(this);
     this.handleStopHoverB = this.handleStopHover.bind(this);
   }
 
   handleStopHover(selectedStation, travelTime) {
     this.setState(Object.assign({}, this.state, { selectedStation, travelTime }))
-  }
-
-  handleMarkerRightclick(index, event) {
-    let {markers} = this.state;
-    markers = update(markers, {
-      $splice: [
-        [index, 1],
-      ],
-    });
-    this.setState({markers});
   }
 
   handleTimeChange(event) {

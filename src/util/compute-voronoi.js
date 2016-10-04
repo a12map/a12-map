@@ -1,4 +1,6 @@
 /* global d3, google */
+import { voronoi } from 'd3-voronoi';
+
 import getColor from './colors';
 
 export function computeVoronoi(data, map, handleHover) {
@@ -19,9 +21,8 @@ export function computeVoronoi(data, map, handleHover) {
       const overlayProjection = markerOverlay.getProjection();
 
       const googleMapProjection = function (lat, lng) {
-        const googleCoordinates = new google.maps.LatLng(lat, lng);
-        const pixelCoordinates = overlayProjection.fromLatLngToDivPixel(googleCoordinates);
-        return [pixelCoordinates.x + 4000, pixelCoordinates.y + 4000];
+        const pixelCoordinates = overlayProjection.fromLatLngToDivPixel(new google.maps.LatLng(lat, lng));
+        return [pixelCoordinates.x + 1000, pixelCoordinates.y + 1000];
       };
 
       const positions = data.map(d => {
@@ -31,32 +32,33 @@ export function computeVoronoi(data, map, handleHover) {
           latLng: googleMapProjection(d.lat, d.lng)
         }
       });
-
-      const voronoiInit = d3.geom.voronoi()
+      const infinity = 1e6;
+      const v2 = voronoi()
         .x(function(d) { return d.latLng[0]; })
-        .y(function(d) { return d.latLng[1]; });
-
-      const polygons = voronoiInit(positions);
+        .y(function(d) { return d.latLng[1]; })
+        .extent([[-infinity, -infinity], [infinity, infinity]]);
 
       const pathAttr = {
-        d(d, i) {
-          return 'M' + polygons[i].join('L') + 'Z'
+        d(d) {
+          return 'M' + d.join('L') + 'Z'
         },
         stroke: 'darkgrey',
         fill(d, i) {
-          return getColor((data[i].value / 60))
+          return getColor((d.data.travelTime / 60))
         },
         opacity: 0.4
       };
 
       svgoverlay.selectAll('path')
-        .data(positions)
+        .data(v2.polygons(positions))
         .attr(pathAttr)
         .enter()
         .append('svg:path')
         .attr('class', 'cell')
         .attr(pathAttr)
-        .on('mouseover', ({ name, travelTime }) => handleHover(name, travelTime));
+        .on('mouseover', ({ data }) => {
+          handleHover(data.name, data.travelTime)
+        });
 
       const circleAttr = {
         cx(d, i) { return positions[i].latLng[0]; },
