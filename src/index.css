@@ -19,9 +19,5 @@ body {
 }
 
 .SvgOverlay svg {
-  position: absolute;
-  top: -1000px;
-  left: -1000px;
-  width: 4000px;
-  height: 4000px;
+
 }
