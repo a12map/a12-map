@@ -1,6 +1,5 @@
 /* global d3, google */
 import { voronoi } from 'd3-voronoi';
-import { throttle } from 'lodash';
 
 import getColor from './colors';
 
@@ -89,7 +88,5 @@ export function computeVoronoi(data, map, handleHover) {
   overlay.setMap(map);
 
   google.maps.event.clearListeners(map, 'dragend');
-  map.addListener('dragend', () => {
-    throttle(overlay.draw, 1000)(data, map, handleHover)
-  });
+  map.addListener('dragend', overlay.draw);
 }
