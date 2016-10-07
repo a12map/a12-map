@@ -17,3 +17,19 @@ body {
   top: 0;
   left: 0;
 }
+
+.cell {
+  stroke: #000;
+  stroke-opacity: .1;
+  opacity: .4;
+}
+
+.cell:hover {
+  stroke: #000;
+  stroke-opacity: .6;
+  stroke-width: 2px;
+}
+
+.cell.selected {
+  opacity: .6;
+}

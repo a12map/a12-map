@@ -3,6 +3,8 @@ import { voronoi } from 'd3-voronoi';
 
 import getColor from './colors';
 
+let selected;
+
 const draw = function (data, handleHover) {
   // http://stackoverflow.com/questions/13852065/custom-mouse-interaction-for-svg-layer-in-google-maps
   const svgWrapper = d3.select('.svgWrapper');
@@ -44,11 +46,9 @@ const draw = function (data, handleHover) {
     d(d) {
       return 'M' + d.join('L') + 'Z'
     },
-    stroke: 'darkgrey',
     fill(d, i) {
       return getColor((d.data.travelTime / 60))
     },
-    opacity: 0.4
   };
 
   const pointGroup = g.attr('class', 'points')
@@ -63,7 +63,11 @@ const draw = function (data, handleHover) {
     .attr('class', 'cell')
     .on('mouseover', ({ data }) => {
       handleHover(data.name, data.travelTime)
-    });
+    })
+    .on('click', (data) => {
+      selected = data.data.latLng.toString()
+    })
+    .classed('selected', data => data.data.latLng.toString() === selected);
 
   pointGroup.append('circle')
     .attr('transform', function(d, i) {
