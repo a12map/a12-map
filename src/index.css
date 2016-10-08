@@ -12,12 +12,24 @@ body {
   height: 100%;
 }
 
-.SvgOverlay {
-  position: relative;
-  width: 100%;
-  height: 100%;
+.svgWrapper > svg {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
-.SvgOverlay svg {
+.cell {
+  stroke: #000;
+  stroke-opacity: .1;
+  opacity: .4;
+}
 
+.cell:hover {
+  stroke: #000;
+  stroke-opacity: .6;
+  stroke-width: 2px;
+}
+
+.cell.selected {
+  opacity: .6;
 }
