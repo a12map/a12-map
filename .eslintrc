@@ -1,6 +1,8 @@
 {
   "extends": "react-app",
   "rules": {
-    "semi": "warn"
+    "semi": "warn",
+    "quotes": ["warn", "single"],
+    "jsx-quotes": ["error", "prefer-double"]
   }
 }

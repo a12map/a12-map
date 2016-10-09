@@ -1,15 +1,22 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
-  GoogleMapLoader,
   GoogleMap,
-} from "react-google-maps";
+  withGoogleMap,
+} from 'react-google-maps';
+
+const MAP_ACCESSOR= '__SECRET_MAP_DO_NOT_USE_OR_YOU_WILL_BE_FIRED';
 
 import { computeVoronoi } from './util/compute-voronoi';
 import { customizeMap } from './util/customize-map';
 
 const pragueLoc = { lat: 50.070569, lng: 14.419172 };
 
-export default class SimpleMap extends Component {
+export class MapsWrapper extends Component {
+
+  static propTypes = {
+    onStationHover: React.PropTypes.func,
+    time: React.PropTypes.string.isRequired,
+  };
 
   constructor(props) {
     super(props);
@@ -29,7 +36,7 @@ export default class SimpleMap extends Component {
   }
 
   handleHover(stationName, travelTime) {
-    this.props.onStopHover(stationName, travelTime);
+    this.props.onStationHover(stationName, travelTime);
   }
 
   updateMap(map, lat = pragueLoc.lat, lng = pragueLoc.lng, time = 'day') {
@@ -43,26 +50,17 @@ export default class SimpleMap extends Component {
       });
   }
 
-  setupMap(ref) {
-    const {map} = ref.props;
+  setupMap({ context }) {
+    const map = context[MAP_ACCESSOR];
     this.gmapRef = map;
     this.updateMap(map);
     customizeMap(map);
   }
 
   render() {
-    const props = this.props;
-    const containerElement =(
-      <div
-        {...props.containerElementProps}
-        style={{ height: `100%`,
-        }}
-      />
-    );
-
-    const googleMapElement = (
+    return (
       <GoogleMap
-        time={props.time}
+        time={this.props.time}
         ref={this.setupMapB}
         defaultZoom={12}
         defaultCenter={pragueLoc}
@@ -74,12 +72,7 @@ export default class SimpleMap extends Component {
         onClick={this.handleMapClickB}
       />
     );
-
-    return (
-      <GoogleMapLoader
-        containerElement={containerElement}
-        googleMapElement={googleMapElement}
-      />
-    );
   }
 }
+
+export default withGoogleMap(MapsWrapper);

@@ -1,8 +1,7 @@
-/* global REACT_APP_MAP_KEY */
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 import './App.css';
-import GoogleMapsVoronai from './GoogleMapsVoronai';
+import MapsWrapper from './MapsWrapper';
 
 import getColor from './util/colors';
 const SCALE_MINUTES = [0, 10, 20, 30, 40, 50, 60];
@@ -14,16 +13,15 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      markers: [],
       time: DAY,
       selectedStation: '',
       travelTime: 0,
     };
 
-    this.handleStopHoverB = this.handleStopHover.bind(this);
+    this.handleStationHoverB = this.handleStationHover.bind(this);
   }
 
-  handleStopHover(selectedStation, travelTime) {
+  handleStationHover(selectedStation, travelTime) {
     this.setState(Object.assign({}, this.state, { selectedStation, travelTime }));
   }
 
@@ -36,6 +34,9 @@ class App extends Component {
   }
 
   render() {
+
+    const fullHeightDiv = <div style={{ height: '100%' }} />;
+
     return (
       <div className="App">
         <div className="App-header">
@@ -47,12 +48,11 @@ class App extends Component {
           </span>
         </div>
         <div className="App-map-container">
-          <GoogleMapsVoronai
+          <MapsWrapper
+            containerElement={fullHeightDiv}
+            mapElement={fullHeightDiv}
             time={this.state.time}
-            markers={this.state.markers}
-            onStopHover={this.handleStopHoverB}
-            onMapClick={this.handleMapClickB}
-            onMarkerRightclick={this.handleMarkerRightclickB}
+            onStationHover={this.handleStationHoverB}
           />
         </div>
         <div className="App-time">

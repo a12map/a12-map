@@ -54,7 +54,7 @@
     "react": "15.3.2",
     "react-addons-update": "15.3.2",
     "react-dom": "15.3.2",
-    "react-google-maps": "^4.11.0"
+    "react-google-maps": "^6.0.0"
   },
   "scripts": {
     "start": "node scripts/start.js",
