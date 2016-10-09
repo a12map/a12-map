@@ -25,11 +25,11 @@ export default class SimpleMap extends Component {
   }
 
   handleMapClick(event) {
-    this.updateMap(this.gmapRef, event.latLng.lat(), event.latLng.lng())
+    this.updateMap(this.gmapRef, event.latLng.lat(), event.latLng.lng());
   }
 
   handleHover(stationName, travelTime) {
-    this.props.onStopHover(stationName, travelTime)
+    this.props.onStopHover(stationName, travelTime);
   }
 
   updateMap(map, lat = pragueLoc.lat, lng = pragueLoc.lng, time = 'day') {
@@ -38,9 +38,9 @@ export default class SimpleMap extends Component {
     fetch(`https://ph2016a12api.herokuapp.com/accessibility?lat=${lat}&lng=${lng}&time=${time}`)
       .then(response => response.json())
       .then(data => {
-        computeVoronoi(data.stations, map, this.handleHoverB)
+        computeVoronoi(data.stations, map, this.handleHoverB);
         this.gmapRef.setMapTypeId(time);
-      })
+      });
   }
 
   setupMap(ref) {
@@ -80,6 +80,6 @@ export default class SimpleMap extends Component {
         containerElement={containerElement}
         googleMapElement={googleMapElement}
       />
-    )
+    );
   }
 }

@@ -1,5 +1,6 @@
 /* global d3, google */
 import { voronoi } from 'd3-voronoi';
+import { select } from 'd3';
 
 import getColor from './colors';
 
@@ -7,7 +8,7 @@ let selected;
 
 const draw = function (data, handleHover) {
   // http://stackoverflow.com/questions/13852065/custom-mouse-interaction-for-svg-layer-in-google-maps
-  const svgWrapper = d3.select('.svgWrapper');
+  const svgWrapper = select('.svgWrapper');
   svgWrapper.html(''); // TODO this is a dirty solution how to empty
 
   const bounds = this.map.getBounds();
@@ -42,15 +43,6 @@ const draw = function (data, handleHover) {
     .y(function(d) { return d.latLng[1]; })
     .extent([[-infinity, -infinity], [infinity, infinity]]);
 
-  const pathAttr = {
-    d(d) {
-      return 'M' + d.join('L') + 'Z'
-    },
-    fill(d, i) {
-      return getColor((d.data.travelTime / 60))
-    },
-  };
-
   const pointGroup = g.attr('class', 'points')
     .selectAll('g')
     .data(v2.polygons(positions))
@@ -59,21 +51,21 @@ const draw = function (data, handleHover) {
     .attr('class', 'point');
 
   pointGroup.append('path')
-    .attr(pathAttr)
+    .attr('d', d => 'M' + d.join('L') + 'Z')
+    .attr('fill', (d, i) => getColor((d.data.travelTime / 60)))
     .attr('class', 'cell')
     .on('mouseover', ({ data }) => {
-      handleHover(data.name, data.travelTime)
+      handleHover(data.name, data.travelTime);
     })
     .on('click', (data) => {
-      selected = data.data.latLng.toString()
+      selected = data.data.latLng.toString();
     })
     .classed('selected', data => data.data.latLng.toString() === selected);
 
   pointGroup.append('circle')
-    .attr('transform', function(d, i) {
-      return `translate(${positions[i].latLng[0]},${positions[i].latLng[1]})`})
+    .attr('transform', ({ data }) => `translate(${data.latLng[0]},${data.latLng[1]})`)
     .attr('r', 1)
-    .attr('fill', 'black')
+    .attr('fill', 'black');
 };
 
 export function computeVoronoi(data, map, handleHover) {

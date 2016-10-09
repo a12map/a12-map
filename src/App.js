@@ -1,3 +1,4 @@
+/* global REACT_APP_MAP_KEY */
 import React, {Component} from 'react';
 
 import './App.css';
@@ -23,7 +24,7 @@ class App extends Component {
   }
 
   handleStopHover(selectedStation, travelTime) {
-    this.setState(Object.assign({}, this.state, { selectedStation, travelTime }))
+    this.setState(Object.assign({}, this.state, { selectedStation, travelTime }));
   }
 
   handleTimeChange(event) {
@@ -31,7 +32,7 @@ class App extends Component {
   }
 
   formatTravelTime(travelTime) {
-    return `${~~(travelTime / 60)} min`
+    return `${~~(travelTime / 60)} min`;
   }
 
   render() {
