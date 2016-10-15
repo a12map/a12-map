@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Map as ImmutableMap } from 'immutable';
 import io from 'socket.io-client';
 
 import PurchasesGoogleMaps from './PurchasesGoogleMaps';
@@ -11,7 +10,6 @@ class PurchasesMap extends Component {
     super();
     this.state = {
       data: {},
-      purchases: []
     };
   }
 
@@ -57,8 +55,6 @@ class PurchasesMap extends Component {
         purchases: [route],
       });
     });
-
-    console.log('subscribe me for data!');
   }
 
   render() {

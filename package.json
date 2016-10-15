@@ -88,5 +88,8 @@
     "presets": [
       "react-app"
     ]
+  },
+  "optionalDependencies": {
+    "fsevents": "^1.0.14"
   }
 }
