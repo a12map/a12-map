@@ -14,7 +14,7 @@ class PurchasesGoogleMaps extends Component {
       <GoogleMap
         ref={props.onMapLoad}
         defaultZoom={8}
-        defaultCenter={{ lat: 49.832317, lng: 15.5075141 }}
+        defaultCenter={{ lat: 49.561150, lng: 16.958839 }}
         onClick={props.onMapClick}
       >
         {Object.keys(props.purchases).map((key, index)=> {
@@ -24,7 +24,7 @@ class PurchasesGoogleMaps extends Component {
               key={index}
               path={purchase.route.path}
               options={{
-                strokeOpacity: .8,
+                strokeOpacity: .5,
                 strokeWeight: 10,
                 strokeColor: getColor(purchase.power)
               }}

@@ -30,14 +30,16 @@ class PurchasesMap extends Component {
 
       const a = route.path[0];
       const b = route.path[route.path.length - 1];
-      const key = `${a.lat}${a.lng}${b.lat}${b.lng}`;
+
+      const sorted = [ a, b ].sort(coo => `${coo.lat}${coo.lng}`);
+      const key = `${sorted[0].lat}${sorted[0].lng}${sorted[1].lat}${sorted[1].lng}`;
 
       if (data[key]) {
         data[key].power += 1;
         data[key].alive += 1;
       } else {
         data[key] = {
-          alive: 100,
+          alive: 200,
           power: 1,
           route,
         };
