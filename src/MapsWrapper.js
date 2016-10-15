@@ -59,7 +59,7 @@ export class MapsWrapper extends Component {
   }
 
   render() {
-    console.log('render in MapsWrapper')
+    console.log('render in MapsWrapper');
     return (
       <GoogleMap
         time={this.props.time}

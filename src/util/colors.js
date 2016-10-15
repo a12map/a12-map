@@ -1,6 +1,6 @@
 import convert from 'color-convert';
 
-const K = 4;
+const K = 10;
 
 export default function (number) {
 
