@@ -36,17 +36,19 @@ class PurchasesMap extends Component {
 
       if (data[key]) {
         data[key].power += 1;
+        data[key].alive += 1;
       } else {
         data[key] = {
-          power: 20,
+          alive: 100,
+          power: 1,
           route,
         };
       }
       Object.keys(data).forEach(k => {
-        data[k].power -= 1;
+        data[k].alive -= 1;
       });
       Object.keys(data).forEach(k => {
-        if (data[k].power === 0) {
+        if (data[k].alive === 0) {
           delete data[k];
         }
       });

@@ -25,7 +25,7 @@ class PurchasesGoogleMaps extends Component {
               path={purchase.route.path}
               options={{
                 strokeOpacity: .8,
-                strokeWeight: 3,
+                strokeWeight: 10,
                 strokeColor: getColor(purchase.power)
               }}
             />
