@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import {
   GoogleMap,
+  OverlayView,
   withGoogleMap,
 } from 'react-google-maps';
 
-const MAP_ACCESSOR= '__SECRET_MAP_DO_NOT_USE_OR_YOU_WILL_BE_FIRED';
-
+import VoronoOverlay from './VoronoiOverlay';
 import { computeVoronoi } from './util/compute-voronoi';
 import { customizeMap } from './util/customize-map';
+import { fetchData } from './services/api';
 
+const MAP_ACCESSOR= '__SECRET_MAP_DO_NOT_USE_OR_YOU_WILL_BE_FIRED';
 const pragueLoc = { lat: 50.070569, lng: 14.419172 };
 
 export class MapsWrapper extends Component {
@@ -42,8 +44,7 @@ export class MapsWrapper extends Component {
   updateMap(map, lat = pragueLoc.lat, lng = pragueLoc.lng, time = 'day') {
     this.lastLat = lat;
     this.lastLng = lng;
-    fetch(`https://ph2016a12api.herokuapp.com/accessibility?lat=${lat}&lng=${lng}&time=${time}`)
-      .then(response => response.json())
+    fetchData(process.REACT_APP_BACKEND_URL, {lat, lng, time})
       .then(data => {
         computeVoronoi(data.stations, map, this.handleHoverB);
         this.gmapRef.setMapTypeId(time);
@@ -58,6 +59,7 @@ export class MapsWrapper extends Component {
   }
 
   render() {
+    console.log('render in MapsWrapper')
     return (
       <GoogleMap
         time={this.props.time}
@@ -70,7 +72,14 @@ export class MapsWrapper extends Component {
         }}
         mapTypeControl={false}
         onClick={this.handleMapClickB}
-      />
+      >
+        <OverlayView
+          position={pragueLoc}
+          mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+        >
+          <VoronoOverlay/>
+        </OverlayView>
+      </GoogleMap>
     );
   }
 }

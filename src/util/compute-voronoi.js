@@ -55,7 +55,7 @@ const draw = function (data, handleHover) {
     .attr('fill', (d, i) => getColor((d.data.travelTime / 60)))
     .attr('class', 'cell')
     .on('mouseover', ({ data }) => {
-      handleHover(data.name, data.travelTime);
+      // handleHover(data.name, data.travelTime);
     })
     .on('click', (data) => {
       selected = data.data.latLng.toString();
