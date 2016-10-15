@@ -51,10 +51,12 @@
     "color-convert": "1.5.0",
     "d3": "4.2.6",
     "d3-voronoi": "1.0.2",
+    "immutable": "^3.8.1",
     "react": "15.3.2",
     "react-addons-update": "15.3.2",
     "react-dom": "15.3.2",
-    "react-google-maps": "^6.0.0"
+    "react-google-maps": "^6.0.0",
+    "socket.io": "^1.5.0"
   },
   "scripts": {
     "start": "node scripts/start.js",
@@ -86,5 +88,8 @@
     "presets": [
       "react-app"
     ]
+  },
+  "optionalDependencies": {
+    "fsevents": "^1.0.14"
   }
 }
